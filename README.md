@@ -1,6 +1,6 @@
-# Amazon Sandals Scraper
+# Amazon Scraper
 
-This project automates a search for women's sandals on Amazon Italy using Puppeteer and saves the results locally.
+This project automates a search for anything (default to women's sandals) on Amazon Italy using Puppeteer and saves the results locally.
 
 ## Prerequisites
 
@@ -41,11 +41,9 @@ Once the search completes, you can review the raw data and an HTML view:
   Open `results/search.json` in your editor or JSON viewer.
 
 - **HTML**  
-  Open `results/search.html` in your browser to see a formatted view of the results. For example:
-  ```bash
-  open results/search.html
-  ```
-  Or drag-and-drop the file into your browser window.
+  Use a library as *http-server* to run it locally, then 
+  Open `results/search.html` in your browser to see a formatted view of the results. 
+  
 
 ## Configuration
 
