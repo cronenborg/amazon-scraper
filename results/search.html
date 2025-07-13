@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Risultati Amazon Sandali</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+
+    .product {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .product img {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-price {
+      color: #008000;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .product-link {
+      margin-top: 0.5rem;
+      display: inline-block;
+      color: #1a0dab;
+      text-decoration: none;
+    }
+
+    .product-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sandali da Donna (da Amazon.it)</h1>
+  <div id="product-list">Caricamento...</div>
+
+  <script>
+    fetch('./search.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('product-list');
+        container.innerHTML = '';
+
+          // Ordina i prodotti per prezzo crescente, ignorando quelli senza prezzo
+        data.sort((a, b) => {
+            const priceA = a.price ?? Infinity;
+            const priceB = b.price ?? Infinity;
+            return priceA - priceB;
+        });
+
+
+        data.forEach(product => {
+          const div = document.createElement('div');
+          div.className = 'product';
+
+          div.innerHTML = `
+            <img src="${product.image}" alt="${product.title}">
+            <div class="product-details">
+              <div class="product-title">${product.title || 'Titolo non disponibile'}</div>
+              <div class="product-price">${product.price ? '€ ' + product.price : 'Prezzo non disponibile'}</div>
+              ${product.link ? `<a class="product-link" href="${product.link}" target="_blank">Vai al prodotto</a>` : ''}
+            </div>
+          `;
+
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        console.error('Errore nel caricamento del JSON:', err);
+        document.getElementById('product-list').innerText = 'Errore nel caricamento dei dati.';
+      });
+  </script>
+</body>
+</html>
